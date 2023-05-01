@@ -1,11 +1,24 @@
-name: booker.io/book
-version: v1.0.3
-provider:
-  name: mayankraipure
-resources:
-  - name: db
-    type: Directory
-    input:
-      type: dir
-      path: "db"
-      compress: true
+components:
+  - name: booker.io/book
+    version: "v1.0.5"
+    provider:
+      name: mayank
+    resources:
+      - name: deployment
+        type: Directory
+        input:
+          type: dir
+          path: "database"
+          compress: true
+      - name: config
+        type: PlainText
+        input:
+          type: file
+          path: "config.yaml"
+          compress: true
+      - name: image
+        type: ociImage
+        version: "12.14"
+        access:
+          type: ociArtifact
+          imageReference: postgres:12.14
