@@ -1,0 +1,11 @@
+name: booker.io/book
+version: v1.0.1
+provider:
+  name: mayankraipure
+resources:
+  - name: db
+    type: Directory
+    input:
+      type: dir
+      path: "db"
+      compress: true

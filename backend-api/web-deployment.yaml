@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  selector:
+    matchLabels:
+      app: web
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: database
+                  key: POSTGRES_DB
+            - name: PG_DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: database
+                  key: HOST
+            - name: SCHEMA
+              valueFrom:
+                configMapKeyRef:
+                  name: database
+                  key: schema
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookersecret
+                  key: password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bookersecret
+                  key: username
+          name: web
+          # image: "docker.local:5000/my_booker_web:latest"
+          # image: "mybookerweb.int.repositories.cloud.sap/mybookerweb:latest"
+          image: "mayankraipure/mybookerweb:latest"
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: regdockercred

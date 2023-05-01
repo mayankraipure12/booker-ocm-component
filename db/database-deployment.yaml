@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: database
+  name: database
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: database
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: database
+    spec:
+      containers:
+        - env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: database
+                  key: POSTGRES_DB
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bookersecret
+                  key: password
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: bookersecret
+                  key: username
+          # image: "docker.local:5000/postgres:latest"
+          image: postgres:latest
+          name: database
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgresdb
+              mountPath: "/data"
+      imagePullSecrets:
+        - name: regdockercred
+      restartPolicy: Always
+      volumes:
+        - name: postgresdb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+status: {}
