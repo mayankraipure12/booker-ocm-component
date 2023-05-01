@@ -1,0 +1,14 @@
+apiVersion: delivery.ocm.software/v1alpha1
+kind: Resource
+metadata:
+  name: booker-deployment
+  namespace: ocm-system
+spec:
+  interval: 10m0s
+  componentVersionRef:
+    name: booker
+    namespace: ocm-system
+  resource:
+    name: db
+  snapshotTemplate:
+    name: booker-deployment
