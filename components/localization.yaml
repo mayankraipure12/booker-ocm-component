@@ -1,0 +1,22 @@
+apiVersion: delivery.ocm.software/v1alpha1
+kind: Localization
+metadata:
+  name: booker-localization
+  namespace: ocm-system
+spec:
+  interval: 1m0s
+  componentVersionRef:
+    name: booker
+    namespace: ocm-system
+  source:
+    sourceRef:
+      kind: Snapshot
+      name: booker-deployment
+      namespace: ocm-system
+  # configRef:
+  #   resource:
+  #     resourceRef:
+  #       name: config
+  snapshotTemplate:
+    name: booker-deployment-localized
+    createFluxSource: true
