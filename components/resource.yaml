@@ -9,6 +9,6 @@ spec:
     name: booker
     namespace: ocm-system
   resource:
-    name: database
+    name: deployment
   snapshotTemplate:
     name: booker-deployment
