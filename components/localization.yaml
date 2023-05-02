@@ -13,10 +13,10 @@ spec:
       kind: Snapshot
       name: booker-deployment
       namespace: ocm-system
-  configRef:
-    resource:
-      resourceRef:
-        name: config
+  # configRef:
+  #   resource:
+  #     resourceRef:
+  #       name: config
   snapshotTemplate:
     name: booker-deployment-localized
     createFluxSource: true
